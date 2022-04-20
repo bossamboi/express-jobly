@@ -45,8 +45,8 @@ function sqlForPartialUpdate(dataToUpdate, jsToSql) {
  *            maxEmployees: 100}
  *
    Returns a joined string of columns and parameterized queries:
-      whereClause: `name ILIKE $1 AND minEmployees >= $2 AND maxEmployees <= $3``
-      values: ['Apple', 4, 100]
+      whereClause: `name ILIKE $1 AND num_employees >= $2 AND num_employees <= $3``
+      values: ['%Apple%', 4, 100]
 
    Throws BadRequestError if queries.minEmployees > queries.maxEmployees or
    if query is invalid.

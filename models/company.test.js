@@ -91,7 +91,7 @@ describe("findAll", function () {
 /************************************** findByFilter */
 
 describe("findByFilter", function () {
-	test("works: with filters", async function () {
+	test("works: with all filters", async function () {
 		const queries = {
 			name: "C",
 			minEmployees: 2,
@@ -113,6 +113,48 @@ describe("findByFilter", function () {
 				description: "Desc3",
 				numEmployees: 3,
 				logoUrl: "http://c3.img",
+			},
+		]);
+	});
+
+	test("works: with name filter", async function () {
+		const queries = {
+			name: "2",
+		};
+
+		let companies = await Company.findByFilter(queries);
+		expect(companies).toEqual([
+			{
+				handle: "c2",
+				name: "C2",
+				description: "Desc2",
+				numEmployees: 2,
+				logoUrl: "http://c2.img",
+			},
+		]);
+	});
+
+	test("works: with min/maxEmployees filters", async function () {
+		const queries = {
+			minEmployees: 1,
+			maxEmployees: 2,
+		};
+
+		let companies = await Company.findByFilter(queries);
+		expect(companies).toEqual([
+			{
+				handle: "c1",
+				name: "C1",
+				description: "Desc1",
+				numEmployees: 1,
+				logoUrl: "http://c1.img",
+			},
+			{
+				handle: "c2",
+				name: "C2",
+				description: "Desc2",
+				numEmployees: 2,
+				logoUrl: "http://c2.img",
 			},
 		]);
 	});
