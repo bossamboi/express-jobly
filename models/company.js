@@ -2,10 +2,7 @@
 
 const db = require("../db");
 const { BadRequestError, NotFoundError } = require("../expressError");
-const {
-	sqlForPartialUpdate,
-	sqlForCompanyFilterSearch,
-} = require("../helpers/sql");
+const { sqlForPartialUpdate } = require("../helpers/sql");
 
 /** Related functions for companies. */
 
@@ -74,7 +71,7 @@ class Company {
 	 */
 
 	static async findByFilter(queries) {
-		const { whereClause, values } = sqlForCompanyFilterSearch(queries);
+		const { whereClause, values } = Company.sqlForCompanyFilterSearch(queries);
 
 		const companiesRes = await db.query(
 			`SELECT handle,
@@ -88,6 +85,54 @@ class Company {
 			values
 		);
 		return companiesRes.rows;
+	}
+
+	/** Takes in an object queries and returns a string of whereClause and
+ * an array of values to pass into an SQL query.
+ *
+ * Queries object must contain any of the following keys:
+ *    name, minEmployees, maxEmployees
+ *
+ * queries = {name: 'Apple',
+ *            minEmployees: 4,
+ *            maxEmployees: 100}
+ *
+   Returns a joined string of columns and parameterized queries:
+      whereClause: `name ILIKE $1 AND num_employees >= $2 AND num_employees <= $3``
+      values: ['%Apple%', 4, 100]
+
+   Throws BadRequestError if queries.minEmployees > queries.maxEmployees or
+   if query is invalid.
+ */
+
+	static sqlForCompanyFilterSearch(queries) {
+		if (queries.minEmployees > queries.maxEmployees) {
+			throw new BadRequestError(
+				"minEmployees cannot be greater than maxEmployees."
+			);
+		}
+
+		const keys = Object.keys(queries);
+		const values = Object.values(queries);
+		let cols = [];
+
+		for (let i = 0; i < keys.length; i++) {
+			if (keys[i] === "name") {
+				cols.push(`name ILIKE $${i + 1}`);
+				values[i] = `%${values[i]}%`; // updates values so we can search for part of name
+			} else if (keys[i] === "minEmployees") {
+				cols.push(`num_employees >= $${i + 1}`);
+			} else if (keys[i] === "maxEmployees") {
+				cols.push(`num_employees <= $${i + 1}`);
+			} else {
+				throw new BadRequestError(`${keys[i]} is not a valid query.`);
+			}
+		}
+
+		return {
+			whereClause: cols.join(" AND "),
+			values,
+		};
 	}
 
 	/** Given a company handle, return data about company.

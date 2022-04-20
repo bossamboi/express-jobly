@@ -187,6 +187,55 @@ describe("findByFilter", function () {
 	});
 });
 
+/************************************** test Filter helper function */
+
+describe("sql company filter search", function () {
+	test("Pass: receiving correct whereClause and values", function () {
+		const query = { name: "Apple", minEmployees: 4, maxEmployees: 100 };
+
+		const { whereClause, values } = Company.sqlForCompanyFilterSearch(query);
+
+		expect(whereClause).toEqual(
+			`name ILIKE $1 AND num_employees >= $2 AND num_employees <= $3`
+		);
+		expect(values).toEqual(["%Apple%", 4, 100]);
+	});
+
+	test("Pass: works for only some queries", function () {
+		const query = { name: "Apple", minEmployees: 4 };
+
+		const { whereClause, values } = Company.sqlForCompanyFilterSearch(query);
+
+		expect(whereClause).toEqual(`name ILIKE $1 AND num_employees >= $2`);
+		expect(values).toEqual(["%Apple%", 4]);
+	});
+
+	test("Pass: works for queries in diff order", function () {
+		const query = { minEmployees: 4, name: "Apple" };
+
+		const { whereClause, values } = Company.sqlForCompanyFilterSearch(query);
+
+		expect(whereClause).toEqual(`num_employees >= $1 AND name ILIKE $2`);
+		expect(values).toEqual([4, "%Apple%"]);
+	});
+
+	test("Fail: when minEmployees > maxEmployees", function () {
+		const query = { minEmployees: 20, maxEmployees: 5 };
+
+		expect(() => Company.sqlForCompanyFilterSearch(query)).toThrow(
+			BadRequestError
+		);
+	});
+
+	test("Fail: when query is invalid", function () {
+		const query = { companyAge: 20, maxEmployees: 5 };
+
+		expect(() => Company.sqlForCompanyFilterSearch(query)).toThrow(
+			BadRequestError
+		);
+	});
+});
+
 /************************************** get */
 
 describe("get", function () {
