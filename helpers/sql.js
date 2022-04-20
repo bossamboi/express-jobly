@@ -20,18 +20,18 @@ const { BadRequestError } = require("../expressError");
  */
 
 function sqlForPartialUpdate(dataToUpdate, jsToSql) {
-  const keys = Object.keys(dataToUpdate);
-  if (keys.length === 0) throw new BadRequestError("No data");
+	const keys = Object.keys(dataToUpdate);
+	if (keys.length === 0) throw new BadRequestError("No data");
 
-  // {firstName: 'Aliya', age: 32} => ['"first_name"=$1', '"age"=$2']
-  const cols = keys.map(
-    (colName, idx) => `"${jsToSql[colName] || colName}"=$${idx + 1}`
-  );
+	// {firstName: 'Aliya', age: 32} => ['"first_name"=$1', '"age"=$2']
+	const cols = keys.map(
+		(colName, idx) => `"${jsToSql[colName] || colName}"=$${idx + 1}`
+	);
 
-  return {
-    setCols: cols.join(", "),
-    values: Object.values(dataToUpdate),
-  };
+	return {
+		setCols: cols.join(", "),
+		values: Object.values(dataToUpdate),
+	};
 }
 
 /** Takes in an object queries and returns a string of whereClause and
@@ -53,33 +53,33 @@ function sqlForPartialUpdate(dataToUpdate, jsToSql) {
  */
 
 function sqlForCompanyFilterSearch(queries) {
-  if (queries.minEmployees > queries.maxEmployees) {
-    throw new BadRequestError(
-      "minEmployees cannot be greater than maxEmployees."
-    );
-  }
+	if (queries.minEmployees > queries.maxEmployees) {
+		throw new BadRequestError(
+			"minEmployees cannot be greater than maxEmployees."
+		);
+	}
 
-  const keys = Object.keys(queries);
-  const values = Object.values(queries);
-  let cols = [];
+	const keys = Object.keys(queries);
+	const values = Object.values(queries);
+	let cols = [];
 
-  for (let i = 0; i < keys.length; i++) {
-    if (keys[i] === "name") {
-      cols.push(`name ILIKE $${i}`);
-      values[i] = `%${values[i]}%`; // updates values so we can search for part of name
-    } else if (keys[i] === "minEmployees") {
-      cols.push(`num_employees >= $${i}`);
-    } else if (keys[i] === "maxEmployees") {
-      cols.push(`num_employees <= $${i}`);
-    } else {
-      throw new BadRequestError(`${keys[i]} is not a valid query.`);
-    }
-  }
+	for (let i = 0; i < keys.length; i++) {
+		if (keys[i] === "name") {
+			cols.push(`name ILIKE $${i + 1}`);
+			values[i] = `%${values[i]}%`; // updates values so we can search for part of name
+		} else if (keys[i] === "minEmployees") {
+			cols.push(`num_employees >= $${i + 1}`);
+		} else if (keys[i] === "maxEmployees") {
+			cols.push(`num_employees <= $${i + 1}`);
+		} else {
+			throw new BadRequestError(`${keys[i]} is not a valid query.`);
+		}
+	}
 
-  return {
-    whereClause: cols.join(" AND "),
-    values,
-  };
+	return {
+		whereClause: cols.join(" AND "),
+		values,
+	};
 }
 
-module.exports = { sqlForPartialUpdate, sqlForFilterSearch };
+module.exports = { sqlForPartialUpdate, sqlForCompanyFilterSearch };
