@@ -194,7 +194,7 @@ class Company {
 		return company;
 	}
 
-	/** Delete given company from database; returns undefined.
+	/** Delete given company from database; returns handle that was deleted.
 	 *
 	 * Throws NotFoundError if company not found.
 	 **/
