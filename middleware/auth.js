@@ -59,7 +59,6 @@ function ensureIsAdmin(req, res, next) {
 /** Middleware: Requires user is user or admin for route. */
 
 function ensureCorrectUserOrAdmin(req, res, next) {
-	//TODO: write tests
 	const user = res.locals.user;
 
 	try {
