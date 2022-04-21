@@ -24,14 +24,14 @@ const router = new express.Router();
  */
 
 router.post("/", ensureIsAdmin, async function (req, res, next) {
-	const validator = jsonschema.validate(req.body, jobNewSchema);
-	if (!validator.valid) {
-		const errs = validator.errors.map((e) => e.stack);
-		throw new BadRequestError(errs);
-	}
+  const validator = jsonschema.validate(req.body, jobNewSchema);
+  if (!validator.valid) {
+    const errs = validator.errors.map((e) => e.stack);
+    throw new BadRequestError(errs);
+  }
 
-	const job = await Job.create(req.body);
-	return res.status(201).json({ job });
+  const job = await Job.create(req.body);
+  return res.status(201).json({ job });
 });
 
 /** GET /  =>
@@ -46,15 +46,15 @@ router.post("/", ensureIsAdmin, async function (req, res, next) {
  */
 
 router.get("/", async function (req, res, next) {
-	let jobs;
+  let jobs;
 
-	if (Object.keys(req.query).length > 0) {
-		jobs = await Job.findByFilter(req.query);
-	} else {
-		jobs = await Job.findAll();
-	}
+  if (Object.keys(req.query).length > 0) {
+    jobs = await Job.findByFilter(req.query);
+  } else {
+    jobs = await Job.findAll();
+  }
 
-	return res.json({ jobs });
+  return res.json({ jobs });
 });
 
 /** GET /[id]  =>  { job }
@@ -66,8 +66,40 @@ router.get("/", async function (req, res, next) {
  */
 
 router.get("/:id", async function (req, res, next) {
-	const job = await Job.get(parseInt(req.params.id));
-	return res.json({ job });
+  const job = await Job.get(parseInt(req.params.id));
+  return res.json({ job });
+});
+
+/** PATCH /[id] { fld1, fld2, ... } => { job }
+ *
+ * Patches job data.
+ *
+ * fields can be: { title, salary, equity }
+ *
+ * Returns { id, title, salary, equity, company_handle }
+ *
+ * Authorization required: login as admin
+ */
+
+router.patch("/:id", ensureIsAdmin, async function (req, res, next) {
+  const validator = jsonschema.validate(req.body, jobUpdateSchema);
+  if (!validator.valid) {
+    const errs = validator.errors.map((e) => e.stack);
+    throw new BadRequestError(errs);
+  }
+
+  const job = await Job.update(parseInt(req.params.id), req.body);
+  return res.json({ job });
+});
+
+/** DELETE /[id]  =>  { deleted: id }
+ *
+ * Authorization: login as admin
+ */
+
+router.delete("/:id", ensureIsAdmin, async function (req, res, next) {
+  await Job.remove(parseInt(req.params.id));
+  return res.json({ deleted: parseInt(req.params.id) });
 });
 
 module.exports = router;
