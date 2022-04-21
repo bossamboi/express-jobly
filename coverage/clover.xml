@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1650560442306" clover="3.2.0">
-  <project timestamp="1650560442306" name="All files">
-    <metrics statements="47" coveredstatements="44" conditionals="29" coveredconditionals="22" methods="10" coveredmethods="7" elements="86" coveredelements="73" complexity="0" loc="47" ncloc="47" packages="2" files="3" classes="3"/>
+<coverage generated="1650574034862" clover="3.2.0">
+  <project timestamp="1650574034862" name="All files">
+    <metrics statements="54" coveredstatements="51" conditionals="18" coveredconditionals="10" methods="13" coveredmethods="10" elements="85" coveredelements="71" complexity="0" loc="54" ncloc="54" packages="2" files="5" classes="5"/>
     <package name="express-jobly">
-      <metrics statements="21" coveredstatements="18" conditionals="14" coveredconditionals="7" methods="6" coveredmethods="3"/>
-      <file name="config.js" path="/Users/ericsohng/Rithm/Week_7/express-jobly/config.js">
+      <metrics statements="26" coveredstatements="23" conditionals="14" coveredconditionals="6" methods="6" coveredmethods="3"/>
+      <file name="config.js" path="/Users/allcallday/Desktop/rithm-school/week-seven/wednesday_4-20/express-jobly/config.js">
         <metrics statements="13" coveredstatements="13" conditionals="10" coveredconditionals="6" methods="1" coveredmethods="1"/>
         <line num="5" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
         <line num="8" count="1" type="cond" truecount="2" falsecount="0"/>
         <line num="10" count="1" type="cond" truecount="2" falsecount="0"/>
-        <line num="14" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="14" count="2" type="cond" truecount="1" falsecount="1"/>
         <line num="22" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="24" count="1" type="stmt"/>
         <line num="25" count="1" type="stmt"/>
@@ -20,48 +20,61 @@
         <line num="29" count="1" type="stmt"/>
         <line num="31" count="1" type="stmt"/>
       </file>
-      <file name="expressError.js" path="/Users/ericsohng/Rithm/Week_7/express-jobly/expressError.js">
-        <metrics statements="8" coveredstatements="5" conditionals="4" coveredconditionals="1" methods="5" coveredmethods="2"/>
-        <line num="9" count="5" type="stmt"/>
-        <line num="10" count="5" type="stmt"/>
-        <line num="11" count="5" type="stmt"/>
+      <file name="db.js" path="/Users/allcallday/Desktop/rithm-school/week-seven/wednesday_4-20/express-jobly/db.js">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+      </file>
+      <file name="expressError.js" path="/Users/allcallday/Desktop/rithm-school/week-seven/wednesday_4-20/express-jobly/expressError.js">
+        <metrics statements="8" coveredstatements="5" conditionals="4" coveredconditionals="0" methods="5" coveredmethods="2"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
         <line num="19" count="0" type="stmt"/>
-        <line num="27" count="5" type="stmt"/>
-        <line num="35" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
         <line num="43" count="0" type="stmt"/>
         <line num="47" count="1" type="stmt"/>
       </file>
     </package>
-    <package name="express-jobly.middleware">
-      <metrics statements="26" coveredstatements="26" conditionals="15" coveredconditionals="15" methods="4" coveredmethods="4"/>
-      <file name="auth.js" path="/Users/ericsohng/Rithm/Week_7/express-jobly/middleware/auth.js">
-        <metrics statements="26" coveredstatements="26" conditionals="15" coveredconditionals="15" methods="4" coveredmethods="4"/>
-        <line num="5" count="1" type="stmt"/>
-        <line num="6" count="1" type="stmt"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="18" count="3" type="stmt"/>
-        <line num="19" count="3" type="cond" truecount="2" falsecount="0"/>
-        <line num="20" count="3" type="cond" truecount="2" falsecount="0"/>
-        <line num="21" count="2" type="stmt"/>
-        <line num="22" count="2" type="stmt"/>
-        <line num="24" count="2" type="stmt"/>
-        <line num="26" count="1" type="stmt"/>
-        <line num="36" count="2" type="stmt"/>
-        <line num="37" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="38" count="1" type="stmt"/>
-        <line num="40" count="1" type="stmt"/>
-        <line num="50" count="3" type="stmt"/>
-        <line num="51" count="3" type="cond" truecount="4" falsecount="0"/>
-        <line num="52" count="2" type="stmt"/>
-        <line num="53" count="1" type="stmt"/>
-        <line num="55" count="2" type="stmt"/>
-        <line num="63" count="5" type="stmt"/>
-        <line num="65" count="5" type="stmt"/>
-        <line num="66" count="5" type="cond" truecount="5" falsecount="0"/>
-        <line num="67" count="2" type="stmt"/>
-        <line num="69" count="3" type="stmt"/>
+    <package name="express-jobly.models">
+      <metrics statements="28" coveredstatements="28" conditionals="4" coveredconditionals="4" methods="7" coveredmethods="7"/>
+      <file name="_testCommon.js" path="/Users/allcallday/Desktop/rithm-school/week-seven/wednesday_4-20/express-jobly/models/_testCommon.js">
+        <metrics statements="13" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="50" count="5" type="stmt"/>
+        <line num="54" count="5" type="stmt"/>
+        <line num="58" count="1" type="stmt"/>
+        <line num="61" count="1" type="stmt"/>
+      </file>
+      <file name="job.js" path="/Users/allcallday/Desktop/rithm-school/week-seven/wednesday_4-20/express-jobly/models/job.js">
+        <metrics statements="15" coveredstatements="15" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="3"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="19" count="3" type="stmt"/>
+        <line num="26" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="29" count="2" type="stmt"/>
+        <line num="40" count="2" type="stmt"/>
+        <line num="42" count="2" type="stmt"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="60" count="1" type="stmt"/>
         <line num="72" count="2" type="stmt"/>
-        <line num="76" count="1" type="stmt"/>
+        <line num="83" count="2" type="stmt"/>
+        <line num="85" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="87" count="1" type="stmt"/>
+        <line num="91" count="1" type="stmt"/>
       </file>
     </package>
   </project>
