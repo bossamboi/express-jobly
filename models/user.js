@@ -138,6 +138,17 @@ class User {
 
     if (!user) throw new NotFoundError(`No user: ${username}`);
 
+    const jobRes = await db.query(
+      `SELECT job_id AS jobId,
+			  FROM applications
+			  WHERE username = $1`,
+      [username]
+    );
+
+    const jobs = jobRes.rows;
+
+    user.jobs = jobs;
+
     return user;
   }
 
@@ -200,6 +211,26 @@ class User {
     const user = result.rows[0];
 
     if (!user) throw new NotFoundError(`No user: ${username}`);
+  }
+
+  /** Allows users to apply for a job via Application joiner table.
+   *
+   * Returns {username, jobId}
+   */
+
+  static async apply(username, id) {
+    let result = await db.query(
+      `
+      INSERT INTO applications
+        (username,
+          job_id)
+       VALUES ($1, $2)
+       RETURNING username, job_id AS jobId`,
+      [username, id]
+    );
+
+    let application = result.rows[0];
+    return application;
   }
 }
 

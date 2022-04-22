@@ -15,6 +15,7 @@ const User = require("../models/user");
 const { createToken } = require("../helpers/tokens");
 const userNewSchema = require("../schemas/userNew.json");
 const userUpdateSchema = require("../schemas/userUpdate.json");
+const { apply } = require("../models/user");
 
 const router = express.Router();
 
@@ -106,6 +107,23 @@ router.delete(
   async function (req, res, next) {
     await User.remove(req.params.username);
     return res.json({ deleted: req.params.username });
+  }
+);
+
+/** POST /[username]/jobs/[id]  =>  { applied: jobId }
+ *
+ * Authorization required: login as admin or own user
+ **/
+
+router.post(
+  "/:username/jobs/:id",
+  ensureCorrectUserOrAdmin,
+  async function (req, res, next) {
+    const username = req.params.username;
+    const id = req.params.id;
+
+    const application = await User.apply(username, id);
+    return res.json({ applied: application.jobId });
   }
 );
 

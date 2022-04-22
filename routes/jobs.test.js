@@ -311,6 +311,8 @@ describe("PATCH /jobs/:id", function () {
   });
 });
 
+//TODO: test to change company handle
+
 /************************************** DELETE /jobs/:id */
 
 describe("DELETE /jobs/:id", function () {

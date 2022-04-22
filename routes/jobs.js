@@ -6,7 +6,7 @@ const jsonschema = require("jsonschema");
 const express = require("express");
 
 const { BadRequestError } = require("../expressError");
-const { ensureLoggedIn, ensureIsAdmin } = require("../middleware/auth");
+const { ensureIsAdmin } = require("../middleware/auth");
 const Job = require("../models/job");
 
 const jobNewSchema = require("../schemas/jobNew.json");
@@ -20,7 +20,7 @@ const router = new express.Router();
  *
  * Returns { id, title, salary, equity, company_handle }
  *
- * Authorization required: admin
+ * Authorization required: logged in as admin
  */
 
 router.post("/", ensureIsAdmin, async function (req, res, next) {
@@ -61,12 +61,11 @@ router.get("/", async function (req, res, next) {
  *
  *  Job is { id, title, salary, equity, company_handle }
  *
- *
  * Authorization required: none
  */
 
 router.get("/:id", async function (req, res, next) {
-  const job = await Job.get(parseInt(req.params.id));
+  const job = await Job.get(req.params.id);
   return res.json({ job });
 });
 
@@ -76,7 +75,7 @@ router.get("/:id", async function (req, res, next) {
  *
  * fields can be: { title, salary, equity }
  *
- * Returns { id, title, salary, equity, company_handle }
+ * Returns { id, title, salary, equity, companyHandle }
  *
  * Authorization required: login as admin
  */

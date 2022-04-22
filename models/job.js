@@ -11,14 +11,15 @@ class Job {
    *
    * data should be { title, salary, equity, company_handle }
    *
-   * Returns { id, title, salary, equity, company_handle }
+   * Returns { id, title, salary, equity, companyHandle }
    *
    * Throws BadRequestError if job already in database.
    * */
 
   static async create({ title, salary, equity, companyHandle }) {
     const duplicateCheck = await db.query(
-      `SELECT title FROM jobs WHERE title = $1 AND salary = $2 AND equity = $3 AND company_handle = $4`,
+      `SELECT title FROM jobs
+			WHERE title = $1 AND salary = $2 AND equity = $3 AND company_handle = $4`,
       [title, salary, equity, companyHandle]
     );
 
@@ -105,6 +106,7 @@ class Job {
     const values = Object.values(queries);
     let cols = [];
 
+    // might be better to use only if/else statements
     for (let i = 0; i < keys.length; i++) {
       if (keys[i] === "title") {
         cols.push(`title ILIKE $${i + 1}`);
@@ -169,9 +171,7 @@ class Job {
    */
 
   static async update(id, data) {
-    const { setCols, values } = sqlForPartialUpdate(data, {
-      companyHandle: "company_handle",
-    });
+    const { setCols, values } = sqlForPartialUpdate(data, {});
     const idVarIdx = "$" + (values.length + 1);
 
     const querySql = `

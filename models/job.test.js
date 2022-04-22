@@ -222,6 +222,8 @@ describe("update", function () {
   });
 });
 
+// TODO: fail test to try and change company handle
+
 /************************************** remove */
 
 describe("remove", function () {
